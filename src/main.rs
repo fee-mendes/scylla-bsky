@@ -2,6 +2,7 @@ use std::sync::Arc;
 use tokio::time::Duration;
 use futures::{pin_mut, StreamExt};
 use std::env;
+use std::collections::HashMap;
 use chrono::{DateTime, Utc}; 
 use skystreamer::{stream::EventStream, RepoSubscription};
 use skystreamer::types::Post;
@@ -44,7 +45,7 @@ struct EmbedMedia {
     kind: String,
     alt: Option<String>,
     blob: EmbedBlob,
-    aspect_ratio: Option<(i32, i32)>
+    aspect_ratio: Option<HashMap<String, i32>>
 }
 
 #[derive(Debug, SerializeCql)]
@@ -249,7 +250,11 @@ async fn handle_post(val: Box<Post>, session: Arc<Session>) {
                     match content {
                         skystreamer::types::Media::Image(img) => {
                             let aspect = if let Some(ratio) = img.aspect_ratio {
-                                Some((ratio.0 as i32, ratio.1 as i32))
+                                let mut map: HashMap<String, i32> = HashMap::new();
+                                map.insert("width".to_string(), ratio.0 as i32);
+                                map.insert("height".to_string(), ratio.1 as i32);
+                                Some(map)
+                                // Some((ratio.0 as i32, ratio.1 as i32))
                             } else {
                                 None
                             };
@@ -261,7 +266,11 @@ async fn handle_post(val: Box<Post>, session: Arc<Session>) {
                         }
                         skystreamer::types::Media::Video(video) => {
                             let aspect = if let Some(ratio) = video.aspect_ratio {
-                                Some((ratio.0 as i32, ratio.1 as i32))
+                                let mut map: HashMap<String, i32> = HashMap::new();
+                                map.insert("width".to_string(), ratio.0 as i32);
+                                map.insert("height".to_string(), ratio.1 as i32);
+                                Some(map)
+                                // Some((ratio.0 as i32, ratio.1 as i32))
                             } else {
                                 None
                             };

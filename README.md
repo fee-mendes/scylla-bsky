@@ -31,7 +31,7 @@ CREATE TYPE social.embed_media (
     kind text,
     alt text,
     blob frozen<embedding_blob>,
-    aspect_ratio frozen<tuple<int, int>>
+    aspect_ratio frozen<map<text, int>>
 );
 
 CREATE TYPE social.embeddings (
