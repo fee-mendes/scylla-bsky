@@ -3,12 +3,6 @@
 ```cql
 CREATE KEYSPACE social WITH replication = {'class': 'org.apache.cassandra.locator.SimpleStrategy', 'replication_factor': '1'} AND durable_writes = true AND tablets = {'enabled': false};
 
-CREATE TYPE social.avatar (
-    cid text,
-    mime_type text,
-    size bigint
-);
-
 CREATE TYPE social.post_reply (
     parent text,
     root text
@@ -110,7 +104,7 @@ CREATE TABLE social.post_likes (
 
 CREATE TABLE social.profile (
     did text,
-    avatar avatar,
+    avatar embedding_blob,
     created_at timestamp,
     description text,
     display_name text,
