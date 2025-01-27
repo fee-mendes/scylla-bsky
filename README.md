@@ -46,7 +46,7 @@ CREATE TABLE social.likes_by_author (
     cid text,
     subject text,
     PRIMARY KEY (author, created_at)
-) WITH CLUSTERING ORDER BY (created_at ASC)
+) WITH CLUSTERING ORDER BY (created_at DESC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''

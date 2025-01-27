@@ -139,6 +139,9 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error>> {
        }
    }
 
+   // Just exit if the stream stops reporting
+   println!("Exitting normally");
+
    Ok(())
 }
 
